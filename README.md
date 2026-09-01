@@ -165,6 +165,10 @@ Results/MethodA/
 ├── Histogram.png
 ├── Boxplot.png
 ├── ViolinPlot.png
+├── Average_Overlays/
+│   ├── Normalized_Whole_200_900nm.png
+│   ├── Normalized_Zoom_500_700nm.png
+│   └── Raw_Averaged_Overlay_200_900nm.png
 ├── Average/
 │   ├── <sample>.png
 │   └── Overlay.png
@@ -202,6 +206,36 @@ For `ACaF_ARef`, the code reports the count, mean, median, sample standard devia
 - potential within-sample outliers based on the mean ± 3 sample standard deviations rule.
 
 The validation report identifies conditions for review; it does not remove spectra or outliers automatically.
+
+### Full-spectrum averaged overlays
+
+The workflow averages every successfully processed shot within each sample and
+plots the resulting mean spectra for Chalk, PFAS1, and PFAS2 as overlays:
+
+- `Normalized_Whole_200_900nm.png`: Method A normalized sample means across 200–900 nm;
+- `Normalized_Zoom_500_700nm.png`: the same normalized means enlarged to 500–700 nm; and
+- `Raw_Averaged_Overlay_200_900nm.png`: sample means calculated directly from the raw, unprocessed intensities.
+
+For the two full-spectrum normalized visualizations, every raw shot is
+normalized separately before averaging. For a shot \(i\), the visualization
+uses:
+
+\[
+I_{visual,i}(\lambda)=\frac{I_i(\lambda)}{\max I_i(\lambda)}.
+\]
+
+The maximum is calculated independently within each figure's wavelength
+window. The 200–900 nm figure uses each shot's maximum from 200–900 nm, while
+the 500–700 nm figure uses each shot's maximum from 500–700 nm. The normalized
+shots are then averaged within Chalk, PFAS1, and PFAS2. This plotting-only
+normalization gives every shot equal visual weight and supports spectral-shape
+comparison. It does not replace or modify the baseline correction,
+`corrected/ARef` CaF plots, `ACaF_ARef` values, statistics, or validation.
+
+Because maximum normalization removes absolute signal-magnitude differences,
+the full-spectrum normalized overlays should not be used to compare absolute
+emission strength or concentration among samples. Use the unchanged analytical
+results for quantitative comparison.
 
 ## Optional overlay module
 
